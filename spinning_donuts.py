@@ -4,31 +4,25 @@ import time
 import shutil
 
 def spinning_donut():
-    A = 0
-    B = 0
+    A, B = 0, 0
 
     while True:
         cols, rows = shutil.get_terminal_size()
-        width = cols - 1
-        height = rows - 1
+        width, height = cols - 1, rows - 1
 
         aspect_ratio = 2
         scaled_width = width // aspect_ratio
 
-        output = [" "] * (width * height)
+        output = [' '] * (width * height)
         zbuffer = [0] * (width * height)
 
         for theta in range(0, 628, 7):
             for phi in range(0, 628, 2):
-                sinA = math.sin(A)
-                cosA = math.cos(A)
-                sinB = math.sin(B)
-                cosB = math.cos(B)
+                sinA, cosA = math.sin(A), math.cos(A)
+                sinB, cosB = math.sin(B), math.cos(B)
+                sinTheta, cosTheta = math.sin(theta / 100), math.cos(theta / 100)
+                sinPhi, cosPhi = math.sin(phi / 100), math.cos(phi / 100)
 
-                sinTheta = math.sin(theta / 100)
-                cosTheta = math.cos(theta / 100)
-                sinPhi = math.sin(phi / 100)
-                cosPhi = math.cos(phi / 100)
 
                 circleX = cosTheta + 2
                 circleY = sinTheta
@@ -36,6 +30,7 @@ def spinning_donut():
                 x = circleX * (cosB * cosPhi + sinA * sinB * sinPhi) - circleY * cosA * sinB
                 y = circleX * (sinB * cosPhi - sinA * cosB * sinPhi) + circleY * cosA * cosB
                 z = 1 / (circleX * sinA * sinPhi + circleY * sinA * cosB + cosA * cosPhi + 5)
+
                 screenX = int(scaled_width / 2 + scaled_width * z * x)
                 screenY = int(height / 2 + height * z * y / 2)
 
@@ -53,5 +48,5 @@ def spinning_donut():
         B += 0.08
         time.sleep(0.03)
 
-
 spinning_donut()
+
